@@ -1,0 +1,20 @@
+server:
+  port: ${CLOUD_API_PORT:8081}
+spring:
+  application:
+    name: mercadinho-cloud-api
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5434/mercadinho_cloud}
+    username: ${DB_USERNAME:mercadinho}
+    password: ${DB_PASSWORD:change-me}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
