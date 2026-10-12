@@ -1,0 +1,5 @@
+package br.com.mercadinho.servidor.produto;
+
+public class ProdutoNaoEncontradoException extends RuntimeException {
+    public ProdutoNaoEncontradoException(String mensagem) { super(mensagem); }
+}
