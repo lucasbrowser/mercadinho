@@ -1,0 +1,34 @@
+services:
+  banco-local:
+    image: postgres:16
+    container_name: mercadinho-banco-local
+    environment:
+      POSTGRES_DB: mercadinho
+      POSTGRES_USER: mercadinho
+      POSTGRES_PASSWORD: ${SENHA_BANCO_LOCAL:-trocar-esta-senha}
+    ports:
+      - "5433:5432"
+    volumes:
+      - dados_banco_local:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mercadinho -d mercadinho"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  banco_nuvem_desenvolvimento:
+    image: postgres:16
+    container_name: mercadinho-banco-nuvem-dev
+    profiles: ["nuvem-dev"]
+    environment:
+      POSTGRES_DB: mercadinho_nuvem
+      POSTGRES_USER: mercadinho
+      POSTGRES_PASSWORD: ${SENHA_BANCO_NUVEM:-trocar-esta-senha}
+    ports:
+      - "5434:5432"
+    volumes:
+      - dados_banco_nuvem:/var/lib/postgresql/data
+
+volumes:
+  dados_banco_local:
+  dados_banco_nuvem:
